@@ -2,13 +2,11 @@
   Renders a swatch component.
   Accepts:
   - swatch: {Object} a swatch object
-  - shape: {String} swatch shape. Accepts 'square', defaults to circle.
+  - variant: {Object} a variant object
+  - forloop: {Object} a forloop object containing loop information
 
   Usage:
-  {% render 'swatch',
-    swatch: value.swatch
-    shape: 'square'
-  %}
+  {% render 'swatch', swatch: value.swatch, variant: value.variant %}
 {% endcomment %}
 
 {%- liquid
@@ -22,11 +20,17 @@
   endif
 -%}
 
-<span
+<button
+  role="button"
+  aria-label="Change image to {{ variant.title }} variant"
+  class="swatch_d block w-[1.25em] aspect-square rounded-full bg-(--swatch--background) bg-(position:--swatch-focal-point) bg-cover bg-origin-border outline-offset-[0.125em] outline-cyan-800! cursor-pointer {% if swatch_value == null %}border-dashed border-1 border-gray-300{% endif %} {%- if forloop.first -%}active{% endif %} [&.active]:!outline"
   {% if swatch_value %}
-    class="swatch{% if shape == 'square' %} swatch--square{% endif %}"
     style="--swatch--background: {{ swatch_value }};{% if swatch_focal_point %} --swatch-focal-point: {{ swatch_focal_point }};{% endif %}"
-  {% else %}
-    class="swatch swatch--unavailable{% if shape == 'square' %} swatch--square{% endif %}"
   {% endif %}
-></span>
+  {%- if variant.featured_image -%}
+    data-img="{{ variant.featured_image.src | image_url: width: 533 }}"
+  {%- endif -%}
+  {%- if variant.metafields.custom.secondary_image.value -%}
+    data-img-secondary="{{ variant.metafields.custom.secondary_image.value | image_url: width: 533 }}"
+  {%- endif -%}
+></button>

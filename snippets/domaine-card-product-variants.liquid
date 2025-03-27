@@ -1,0 +1,22 @@
+{% comment %}
+  Renders product variant-picker on a product card.
+
+  Accepts:
+  - product: {Object} product object.
+  Usage:
+  {% render 'domaine-card-product-variants', product: product %}
+{% endcomment %}
+
+{%- unless product.has_only_default_variant -%}
+  {%- for option in product.options_with_values -%}
+    {%- if option.name == 'Color' -%}
+      <card-variants>
+        <ul class="list-none flex gap-3 mt-[0.875em]">
+          {%- for value in option.values -%}
+            {% render 'domaine-swatch', swatch: value.swatch, variant: value.variant, forloop: forloop %}
+          {%- endfor -%}
+        </ul>
+      </card-variants>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
