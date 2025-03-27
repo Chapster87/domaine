@@ -1,0 +1,39 @@
+{% comment %}
+  Renders product media on a product card.
+
+  Accepts:
+  - product: {Object} product object.
+  - show_secondary_image: {Boolean} Show secondary image on hover. Default is true.
+  - lazy_load: {Boolean} Enable lazy loading. Default is true.
+  Usage:
+  {% render 'domaine-card-product-media', product: product %}
+{% endcomment %}
+{%- if product.featured_media -%}
+  <a href="{{ product.url }}" class="card-image-link full-unstyled-link group">
+    <div class="card-image-wrapper border-1 border-gray-200 rounded-2xl mr-[0.313em] px-[0.438em] py-[1.25em] relative overflow-hidden">
+      {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+      <img
+        src="{{ product.featured_media | image_url: width: 596 }}"
+        alt="{{ product.featured_media.alt | escape }}"
+        class="card-image max-h-[18.625em] {%- if product.media[1].src -%}{{ ' ' }}group-hover:opacity-0 {%- endif -%}"
+        {% unless lazy_load == false %}
+          loading="lazy"
+        {% endunless %}
+        width="{{ product.featured_media.width }}"
+        height="{{ product.featured_media.height }}"
+      >
+      {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+
+      {%- if product.media[1] != null and show_secondary_image -%}
+        <img
+          src="{{ product.media[1] | image_url: width: 596 }}"
+          alt="{{ product.media[1].alt | escape }}"
+          class="card-image-secondary max-h-[18.625em] absolute top-0 left-0 right-0 mx-auto my-px opacity-0 max-h-full w-auto group-hover:opacity-100 transition-transform duration-500 ease"
+          loading="lazy"
+          width="{{ product.media[1].width }}"
+          height="{{ product.media[1].height }}"
+        >
+      {%- endif -%}
+    </div>
+  </a>
+{%- endif -%}

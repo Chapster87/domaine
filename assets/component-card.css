@@ -274,6 +274,7 @@
   align-self: flex-end;
   grid-row-start: 3;
   justify-self: flex-start;
+  z-index: 10;
 }
 
 .card__badge.top {
@@ -285,7 +286,7 @@
   justify-self: flex-end;
 }
 
-.card:not(.card--horizontal) > .card__content > .card__badge {
+.card:not(.card--horizontal) > .card__badge {
   margin: 1.3rem;
 }
 
@@ -346,16 +347,6 @@
   top: calc(var(--border-width) * -1);
 }
 
-.card__heading a::after {
-  bottom: 0;
-  content: '';
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-}
-
 .card__heading a:after {
   outline-offset: 0.3rem;
 }
@@ -381,25 +372,19 @@
 }
 
 @media screen and (min-width: 990px) {
-  .card .media.media--hover-effect > img:only-child,
-  .card-wrapper .media.media--hover-effect > img:only-child {
+  /* .card__media .media.media--hover-effect > img:only-child,
+  .card__media .media.media--hover-effect > img:only-child {
     transition: transform var(--duration-long) ease;
-  }
+  } */
 
-  .card:hover .media.media--hover-effect > img:first-child:only-child,
-  .card-wrapper:hover .media.media--hover-effect > img:first-child:only-child {
-    transform: scale(1.03);
-  }
-
-  .card-wrapper:hover .media.media--hover-effect > img:first-child:not(:only-child) {
+  /* .card__media:hover .media.media--hover-effect > img:first-child:not(:only-child) {
     opacity: 0;
-  }
+  } */
 
-  .card-wrapper:hover .media.media--hover-effect > img + img {
+  /* .card__media:hover .media.media--hover-effect > img + img {
     opacity: 1;
     transition: transform var(--duration-long) ease;
-    transform: scale(1.03);
-  }
+  } */
 
   .underline-links-hover:hover a {
     text-decoration: underline;
@@ -407,13 +392,13 @@
   }
 }
 
-.card--standard.card--media .card__inner .card__information,
+/* .card--standard.card--media .card__inner .card__information,
 .card--standard.card--text:not(.card--horizontal) > .card__content .card__heading:not(.card__heading--placeholder),
-.card--standard:not(.card--horizontal) > .card__content .card__badge,
+.card--standard:not(.card--horizontal) .card__badge,
 .card--standard.card--text.article-card > .card__content .card__information,
 .card--standard > .card__content .card__caption {
   display: none;
-}
+} */
 
 .card--standard:not(.card--horizontal) .placeholder-svg {
   width: 100%;
@@ -430,7 +415,7 @@
 
 .card--card.card--media .card__inner .card__information,
 .card--card.card--text .card__inner,
-.card--card.card--media > .card__content .card__badge {
+.card--card.card--media .card__badge {
   display: none;
 }
 
